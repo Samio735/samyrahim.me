@@ -1,0 +1,31 @@
+---
+import ChatContainer from "./ChatContainer";
+import Container from "./Container.astro";
+---
+
+<section>
+    <Container>
+        <div class="flex">   
+        <div class="p-[--card-padding]  overflow-hidden  flex rounded-[--card-border-radius] ">
+            <div class="max-w-4xl w-full  m-auto space-y-12">
+                <ChatContainer client:load/>
+            </div>
+        </div>     
+         <div>
+        <div class="mt-12 gap-4 flex flex-col p-6 text-lg max-w-3xl w-full mx-auto">
+            <div>
+                <h2 class="text-gray-950 dark:text-white text-4xl font-semibold">Customer Support Chatbots</h2>
+            </div>
+            <ul class="space-y-3">
+                <li class="text-gray-600 dark:text-gray-400">Perfect for real estate agents </li>
+ <li class="text-gray-600 dark:text-gray-400">Handle inquiries, schedule viewings, and qualify leads</li>
+<li class="text-gray-600 dark:text-gray-400">Available 24/7, never miss an opportunity</li>
+
+            </ul>
+        </div>
+        </div>
+           
+        </div>
+
+    </Container>
+</section>

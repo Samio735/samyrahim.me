@@ -7,16 +7,19 @@ import CallToAction from '../components/CallToAction.astro';
 import BentoGrid from '@components/BentoGrid.astro';
 import SpeedSection from '@components/SpeedSection.astro';
 import AboutSection from '@components/AboutSection.astro';
+import Voice from '@components/Voice.astro';
+import VoiceAlt from '@components/VoiceAlt.astro';
+import Counter from '@components/Counter.jsx';
 ---
 
 <Layout title="Welcome to Astrolus.">
 	<main class="space-y-16 sm:space-y-28 lg:space-y-32 pb-40 overflow-clip">
 		<HeroSection/>
-		<AboutSection />
-		<BentoGrid />
-		<SpeedSection />
-		<Stats/>
-		<Testimonials/>
-		<CallToAction/>
+		<Voice />
+		<VoiceAlt />
+			<Voice />
+		<VoiceAlt />
+				<CallToAction/>
+
 	</main>
 </Layout>
