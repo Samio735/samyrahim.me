@@ -1,82 +1,96 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import ActiveCallDetail from "./components/ActiveCallDetail";
 import Button from "./components/base/Button";
 import Vapi from "@vapi-ai/web";
 import { isPublicKeyMissingError } from "./utils";
 
-// Put your Vapi Public Key below.
-
-export default function App()  {
+export default function App() {
+  const vapiRef = useRef(null);
   const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState(false);
-
   const [assistantIsSpeaking, setAssistantIsSpeaking] = useState(false);
   const [volumeLevel, setVolumeLevel] = useState(0);
 
   const { showPublicKeyInvalidMessage, setShowPublicKeyInvalidMessage } =
     usePublicKeyInvalid();
 
-  // hook into Vapi events
   useEffect(() => {
-    const vapi = new Vapi("e636c620-574c-409f-9e53-e38ca5b2b085");
+    vapiRef.current = new Vapi("e636c620-574c-409f-9e53-e38ca5b2b085");
+    const vapi = vapiRef.current;
 
-    vapi.on("call-start", () => {
+    const setupVapiListeners = () => {
+      vapi.on("call-start", () => {
+        setConnecting(false);
+        setConnected(true);
+        setShowPublicKeyInvalidMessage(false);
+      });
+
+      vapi.on("call-end", () => {
+        setConnecting(false);
+        setConnected(false);
+        setShowPublicKeyInvalidMessage(false);
+      });
+
+      vapi.on("speech-start", () => {
+        setAssistantIsSpeaking(true);
+      });
+
+      vapi.on("speech-end", () => {
+        setAssistantIsSpeaking(false);
+      });
+
+      vapi.on("volume-level", (level) => {
+        setVolumeLevel(level);
+      });
+
+      vapi.on("error", (error) => {
+        console.error(error);
+        setConnecting(false);
+        if (isPublicKeyMissingError({ vapiError: error })) {
+          setShowPublicKeyInvalidMessage(true);
+        }
+      });
+    };
+
+    setupVapiListeners();
+
+    return () => {
+      // Cleanup listeners if needed
+      vapi.removeAllListeners();
+    };
+  }, [setShowPublicKeyInvalidMessage]);
+
+  const startCallInline = async () => {
+    try {
+      setConnecting(true);
+      await vapiRef.current?.start(assistantOptions);
+    } catch (error) {
+      console.error('Failed to start call:', error);
       setConnecting(false);
-      setConnected(true);
-
-      setShowPublicKeyInvalidMessage(false);
-    });
-
-    vapi.on("call-end", () => {
-      setConnecting(false);
-      setConnected(false);
-
-      setShowPublicKeyInvalidMessage(false);
-    });
-
-    vapi.on("speech-start", () => {
-      setAssistantIsSpeaking(true);
-    });
-
-    vapi.on("speech-end", () => {
-      setAssistantIsSpeaking(false);
-    });
-
-    vapi.on("volume-level", (level) => {
-      setVolumeLevel(level);
-    });
-
-    vapi.on("error", (error) => {
-      console.error(error);
-
-      setConnecting(false);
-      if (isPublicKeyMissingError({ vapiError: error })) {
-        setShowPublicKeyInvalidMessage(true);
-      }
-    });
-
-    // we only want this to fire on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // call start handler
-  const startCallInline = () => {
-    setConnecting(true);
-    vapi.start(assistantOptions);
+      setShowPublicKeyInvalidMessage(true);
+    }
   };
+
   const endCall = () => {
-    vapi.stop();
+    try {
+      vapiRef.current?.stop();
+    } catch (error) {
+      console.error('Failed to end call:', error);
+    }
   };
 
   return (
     <div
       style={{
         display: "flex",
-        width: "500px",
-        height: "200px",
+        width: "200px",
+        minHeight: "200px",
         justifyContent: "center",
         alignItems: "center",
+        color: "#ffffff",
+        padding: "20px",
+        borderRadius: "8px",
       }}
     >
       <h1 style={{ textAlign: "center", fontSize: "20px" }}>
@@ -103,7 +117,7 @@ export default function App()  {
 const assistantOptions = {
   name: "Bright Future Real Estate Front Desk",
   firstMessage:
-    " Hey Joseph! This is Sara from Bright Future Real Estate. How's your day going so far?",
+    " Hey ! This is Sara from Bright Future Real Estate. How's your day going so far?",
   transcriber: {
     provider: "deepgram",
     model: "nova-2",
@@ -161,7 +175,7 @@ Example Script:
 
 **Assistant:** Fantastic choice! I'll jot that down. Perfect, Fatima! We'll get working on it and be in touch super soon. Thanks for chatting with me!
 
-Thie client's name is Joseph`,
+`,
       },
     ],
   },
@@ -195,9 +209,9 @@ const PleaseSetYourPublicKeyMessage = () => {
         left: "25px",
         padding: "10px",
         color: "#fff",
-        backgroundColor: "#f03e3e",
+        backgroundColor: "#dc3545",
         borderRadius: "5px",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.4)",
       }}
     >
       Is your Vapi Public Key missing? (recheck your code)
@@ -217,11 +231,14 @@ const ReturnToDocsLink = () => {
         right: "25px",
         padding: "5px 10px",
         color: "#fff",
+        backgroundColor: "#2a2a2a",
         textDecoration: "none",
         borderRadius: "5px",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.4)",
       }}
-    ></a>
+    >
+      Docs
+    </a>
   );
 };
 

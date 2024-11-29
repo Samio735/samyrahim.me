@@ -3,29 +3,26 @@ import ChatContainer from "./ChatContainer";
 import Container from "./Container.astro";
 ---
 
-<section>
+<section class="max-w-7xl mx-auto">
     <Container>
-        <div class="flex">   
-        <div class="p-[--card-padding]  overflow-hidden  flex rounded-[--card-border-radius] ">
-            <div class="max-w-4xl w-full  m-auto space-y-12">
+        <div class="flex flex-col lg:flex-row gap-8 items-center justify-center">   
+        <div class="lg:w-1/2 p-4 lg:p-[--card-padding] overflow-hidden flex rounded-[--card-border-radius] order-1 lg:order-1">
+            <div class="w-full m-auto space-y-8 lg:space-y-12">
                 <ChatContainer client:load/>
             </div>
         </div>     
-         <div>
-        <div class="mt-12 gap-4 flex flex-col p-6 text-lg max-w-3xl w-full mx-auto">
-            <div>
-                <h2 class="text-gray-950 dark:text-white text-4xl font-semibold">Customer Support Chatbots</h2>
+         <div class="lg:w-1/2 order-2 lg:order-2">
+            <div class="mt-4 lg:mt-12 gap-4 flex flex-col p-4 lg:p-6 text-lg w-full">
+                <div>
+                    <h2 class="text-gray-950 dark:text-white text-4xl font-semibold">Customer Support Chatbots</h2>
+                </div>
+                <ul class="space-y-3">
+                    <li class="text-gray-600 dark:text-gray-400">Perfect for real estate agents </li>
+                    <li class="text-gray-600 dark:text-gray-400">Handle inquiries, schedule viewings, and qualify leads</li>
+                    <li class="text-gray-600 dark:text-gray-400">Available 24/7, never miss an opportunity</li>
+                </ul>
             </div>
-            <ul class="space-y-3">
-                <li class="text-gray-600 dark:text-gray-400">Perfect for real estate agents </li>
- <li class="text-gray-600 dark:text-gray-400">Handle inquiries, schedule viewings, and qualify leads</li>
-<li class="text-gray-600 dark:text-gray-400">Available 24/7, never miss an opportunity</li>
-
-            </ul>
+         </div>
         </div>
-        </div>
-           
-        </div>
-
     </Container>
 </section>
