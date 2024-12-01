@@ -108,8 +108,6 @@ export default function App() {
         />
       )}
 
-      {showPublicKeyInvalidMessage ? <PleaseSetYourPublicKeyMessage /> : null}
-      <ReturnToDocsLink />
     </div>
   );
 };
@@ -200,46 +198,8 @@ const usePublicKeyInvalid = () => {
   };
 };
 
-const PleaseSetYourPublicKeyMessage = () => {
-  return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: "25px",
-        left: "25px",
-        padding: "10px",
-        color: "#fff",
-        backgroundColor: "#dc3545",
-        borderRadius: "5px",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.4)",
-      }}
-    >
-      Is your Vapi Public Key missing? (recheck your code)
-    </div>
-  );
-};
 
-const ReturnToDocsLink = () => {
-  return (
-    <a
-      href="https://docs.vapi.ai"
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        position: "fixed",
-        top: "25px",
-        right: "25px",
-        padding: "5px 10px",
-        color: "#fff",
-        backgroundColor: "#2a2a2a",
-        textDecoration: "none",
-        borderRadius: "5px",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.4)",
-      }}
-    >
-      Docs
-    </a>
-  );
-};
+
+
 
 
