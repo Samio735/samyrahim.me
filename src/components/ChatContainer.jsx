@@ -45,7 +45,7 @@ export default function ChatContainer() {
             </div>
 
             {/* Messages container */}
-            <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-800">
+            <div className="flex-1 overflow-y-auto bg-slate-50 ">
                 <div className="flex flex-col-reverse gap-2 p-4">
                     {[...messages].reverse().map((msg, index) => (
                         <ChatBubble 
@@ -58,23 +58,23 @@ export default function ChatContainer() {
             </div>
 
             {/* Input section */}
-            <div className="relative p-4 bg-white dark:bg-slate-800">
+            <div className="relative p-4 bg-white ">
                 <input 
                     ref={inputRef}
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && sendMessage(inputValue)}
-                    className="w-full dark:bg-slate-600 bg-slate-50 text-black dark:text-white rounded-lg px-4 py-3" 
+                    className="w-full  bg-slate-50 text-black  rounded-lg px-4 py-3" 
                     placeholder="Type a message"
                     disabled={isLoading}
                 />
                 <button 
                     onClick={() => sendMessage(inputValue)}
                     disabled={isLoading}
-                    className="absolute right-6 top-1/2 -translate-y-1/2 dark:text-white opacity-45 hover:opacity-100 disabled:opacity-25"
+                    className="absolute right-6 top-1/2 -translate-y-1/2  opacity-45 hover:opacity-100 disabled:opacity-25"
                 >
-                    <svg className="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <svg className="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="rgb(51 65 85)">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
                 </button>
