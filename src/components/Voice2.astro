@@ -1,6 +1,7 @@
 ---
 import Container from "./Container.astro";
 import Agent from "./Agent.jsx";
+import AgentSupport from "./AgentSupport";
 ---
 
 <section class="max-w-7xl mb-10 mx-auto">
@@ -9,15 +10,15 @@ import Agent from "./Agent.jsx";
          <div class="lg:w-1/2 order-2 lg:order-1">
             <div class="mt-4  gap-4 flex flex-col p-4 lg:p-6 text-lg w-full">
                 <div>
-                    <h2 class="text-gray-950 dark:text-white text-4xl font-semibold">Outbound Cold Calling Voice AI Agents
+                    <h2 class="text-gray-950 dark:text-white text-4xl font-semibold">Inbound Customer Support Voice AI Agents
 </h2>
                 </div>
-             <p class="text-gray-600 dark:text-gray-400" >Supercharge Your Sales with AI-Powered Cold Calling
-Automated voice agents that qualify leads, book meetings, and drive conversions 24/7</p>
+             <p class="text-gray-600 dark:text-gray-400" >AI Voice Assistants that Deliver Personalized Customer Experiences.
+Intelligent communication solutions that understand, engage, and resolve customer queries instantly</p>
             </div>
          </div>
          <div class="p-4 lg:p-[--card-padding] overflow-hidden  h-full flex  order-1 lg:order-2">
-                <Agent client:load/>
+                <AgentSupport client:load/>
          </div>
         </div>
     </Container>

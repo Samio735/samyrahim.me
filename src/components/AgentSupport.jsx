@@ -1,12 +1,10 @@
 import { useEffect, useState, useRef } from "react";
-
-import ActiveCallDetail from "./components/ActiveCallDetail";
-import Button from "./components/base/Button";
+import CustomerActiveCallDetail from "./components/call/CustomerActiveCallDetail";
 import Vapi from "@vapi-ai/web";
 import { isPublicKeyMissingError } from "./utils";
-import PhoneCallUI from "./components/PhoneCallUI";
+import CustomerSupportUI from "./components/CustomerSupportUI";
 
-export default function App() {
+export default function AgentSupport() {
   const vapiRef = useRef(null);
   const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState(false);
@@ -86,15 +84,14 @@ export default function App() {
   };
 
   return (
-    <div className="w-[300px] min-h-[400px] rounded-3xl bg-gray-100 dark:bg-gray-800 p-4 shadow-xl">
+    <div className="w-[350px] min-h-[300px] rounded-3xl  p-4 shadow-xl">
       {!connected ? (
-        <PhoneCallUI 
-          onAnswer={handleAnswer}
-          onReject={handleReject}
+        <CustomerSupportUI 
+          onStartChat={handleAnswer}
           isConnecting={connecting}
         />
       ) : (
-        <ActiveCallDetail
+        <CustomerActiveCallDetail
           assistantIsSpeaking={assistantIsSpeaking}
           onEndCallClick={endCall}
         />
@@ -104,9 +101,9 @@ export default function App() {
 };
 
 const assistantOptions = {
-  name: "Bright Future Real Estate Front Desk",
+  name: "Bright Smile Dental Clinic Assistant",
   firstMessage:
-    " Hey ! This is Sara from Bright Future Real Estate. How's your day going so far?",
+    "Hi! I'm Dina from Bright Smile Dental Clinic. How can I help you today?",
   transcriber: {
     provider: "deepgram",
     model: "nova-2",
@@ -122,48 +119,32 @@ const assistantOptions = {
     messages: [
       {
         role: "system",
-        content: `You are a voice assistant for Bright Future Real Estate, a real estate agency assisting home buyers and sellers located at 789 Dream Street, Dubai. The agency operates from 9 AM to 6 PM, Monday through Saturday, and is closed on Sundays.
+        content: `You are a voice assistant for Bright Smile Dental Clinic, a modern dental practice located at 123 Health Avenue, Dubai. The clinic operates from 8 AM to 8 PM, Monday through Saturday, and is closed on Sundays.
 
-Bright Future Real Estate provides services for buying and selling property to the local Dubai community. The lead agent is Karim Al-Fayed.
+Bright Smile Dental Clinic provides comprehensive dental care services including:
+- Regular check-ups and cleaning
+- Emergency dental care
+- Cosmetic dentistry
+- Orthodontics
+- Root canal treatment
+- Dental implants
 
-You are tasked with calling home owners to find out if they have a property they're willing to sell or if they are interested in buying property. If they are, your goal is to gather necessary information in a friendly and engaging manner like follows:
+You are tasked with handling patient inquiries and appointments. Your goals are to:
 
-1. Introduce yourself and the agency.
-2. Ask if they are considering selling their property.
-3. If they are not, ask if they are interested in buying any property.
-4. Gather their full name and contact information.
-5. If interested in buying, ask for their preferences (location, type of property, budget).
-6. If interested in selling, ask for details about their property (location, type, size).
-7. Confirm all details with the caller and thank them for their time.
+1. Greet callers warmly and professionally
+2. Handle appointment scheduling and modifications
+3. Answer questions about services and treatments
+4. Collect patient information when needed
+5. Handle emergency scheduling
+6. Provide basic information about procedures
+7. Direct urgent cases appropriately
 
+Keep responses conversational and reassuring. Use phrases like:
+- "I understand that dental visits can be concerning..."
+- "Let me help you with that..."
+- "Our experienced dentists will take great care of you..."
 
-- Keep all responses short and simple. Use casual language, phrases like "Umm...", "Well...", and "I mean" are preferred.
-- This is a voice conversation, so keep your responses short, like in a real conversation. Don't ramble for too long.
-
-Example Script:
-
-**Assistant:** Hey Joseph! This is Karim from Bright Future Real Estate. How's your day going so far?
-
-**Owner:** Good, thanks. How about you?
-
-**Assistant:** Oh, just another sunny day in Dubai's real estate world! Quick question for you. Do you have a property you're thinking about selling?
-
-**Owner:** Not really.
-
-**Assistant:** Got it! Well, what about buying? Any chance you're on the lookout for a new spot, or maybe know someone who is?
-
-**Owner:** Actually, I might be looking.
-
-**Assistant:** Sweet! We can definitely help with that. Can I grab your full name and a contact number real quick?
-
-**Owner:** Sure, it's Fatima Ali and my number is 050-6789-432.
-
-**Assistant:** Thanks, Fatima! So, what kind of place are you dreaming of? Got any specific location or budget in mind?
-
-**Owner:** I'm looking for a 2-bedroom apartment in the Marina area, budget around AED 1.5 million.
-
-**Assistant:** Fantastic choice! I'll jot that down. Perfect, Fatima! We'll get working on it and be in touch super soon. Thanks for chatting with me!
-
+Example conversation:
 `,
       },
     ],
