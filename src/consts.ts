@@ -1,4 +1,4 @@
-export const SITE_TITLE = 'Atom - A Tailus template';
-export const SITE_DESCRIPTION = 'Modern free Tailwind CSS, Astro landing page template for startups | built with Tailus Themer';
-export const SITE_URL = 'https://atom.tailus.io';
-export const SITE_IMAGE = '/og.png';
+export const SITE_TITLE = 'Samy Rahim';
+export const SITE_DESCRIPTION = 'Samy Rahim, Full StackGenAI Solutions Engineer';
+export const SITE_URL = 'https://www.samyrahim.me/';
+export const SITE_IMAGE = 'og.png';
