@@ -11,6 +11,12 @@ import Voice from '@components/Voice.astro';
 import VoiceAlt from '@components/VoiceAlt.astro';
 import Counter from '@components/Counter.jsx';
 import Voice2 from '@components/Voice2.astro';
+import Workflows from '@components/Workflows.astro';
+import { cn } from "@lib/utils"
+import Container from "../components/Container.astro"
+import {button} from "@tailus/themer-button"
+import Frame from "../components/Frame.astro"
+
 ---
 
 <Layout title="Welcome to Astrolus.">
@@ -19,7 +25,20 @@ import Voice2 from '@components/Voice2.astro';
 		<Voice />
 		<VoiceAlt />
 		<Voice2 />
+<Workflows />
 
+<div class="mt-10 m flex flex-col  items-center flex-wrap justify-center gap-6">
+	<h2 class="text-gray-950 dark:text-white text-4xl font-semibold  italic">Let's Talk</h2>
+	<p class="text-center max-w-md  text-gray-950 dark:text-white">Let's Bring Your AI Vision to Life
+Book a free 30-minute consultation and discover how custom AI can solve your most pressing business challenges.</p>
+<div class="w-fit">                    <Frame>
+                      <a href="" class={cn(button.primary.lg, "relative z-[1]")}>
+                       Connect with me on linkedin
+                      </a>
+                    </Frame>
+					</div>
+
+                </div>
 				<!-- <CallToAction/> -->
 
 	</main>

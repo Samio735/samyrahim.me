@@ -1,0 +1,27 @@
+---
+import Container from "./Container.astro";
+---
+
+<section class="max-w-7xl mx-auto">
+    <Container>
+        <div class="flex flex-col lg:flex-row gap-8 items-center justify-center">   
+        <div class="lg:w-1/2 p-4 lg:p-[--card-padding] overflow-hidden flex rounded-[--card-border-radius] order-1 lg:order-1">
+            <div class="w-full m-auto space-y-8 lg:space-y-12">
+                <img src="/ai-automation.webp" alt="AI Automation" class="w-full h-auto rounded-lg"/>
+            </div>
+        </div>     
+         <div class="lg:w-1/2 order-2 lg:order-2">
+            <div class="mt-4 lg:mt-12 gap-4 flex flex-col p-4 lg:p-6 text-lg w-full">
+                <div>
+                    <h2 class="text-gray-950 dark:text-white text-4xl font-semibold">AI Workflow Automation</h2>
+                </div>
+               <p class="text-gray-600 dark:text-gray-400">
+                    Custom made AI-powered workflows that
+                    Automate repetitive business processes.<br/>
+                    Reduce cost and increase operational efficiency
+                </p>
+            </div>
+         </div>
+        </div>
+    </Container>
+</section>
