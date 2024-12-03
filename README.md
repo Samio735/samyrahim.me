@@ -7,7 +7,7 @@ A modern landing page built with Astro showcasing AI automation services and sol
 - ⚡️ Built with Astro for optimal performance
 - 🎨 Dark/Light mode support
 - 📱 Fully responsive design
-- ���� Interactive components with motion effects
+- 🕹️ Interactive components with motion effects
 
 ## Tech Stack
 
