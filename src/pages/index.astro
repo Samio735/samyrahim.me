@@ -18,6 +18,7 @@ import CustomSolutions from '@components/Offers/CustomSolutions.astro';
 import DataAnalytics from '@components/Offers/DataAnalytics.astro';
 import AutomatedWorkflows from '@components/Offers/AutomatedWorkflows.astro';
 import Offers from '@components/Offers.astro';
+import Technologies from '@components/Technologies.astro';
 import Projects from '@components/Projects';
 
 ---
@@ -26,6 +27,7 @@ import Projects from '@components/Projects';
 	<main class="space-y-16 sm:space-y-28 lg:space-y-32 pb-40 overflow-clip">
 		<HeroSection/>
 		<Projects client:load />
+		<Technologies />
 		<Offers />
 		<LetsTalk />
 	</main>

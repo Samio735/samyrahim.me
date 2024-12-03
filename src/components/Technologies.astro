@@ -1,0 +1,46 @@
+---
+import Container from "./Container.astro";
+
+const techCategories = [
+    {
+        title: "GenAI Frameworks",
+        items: ["Assistants API (OpenAI)", "LangChain", "Whisper AI","Text-to-speech", "Embeddings"]
+    },
+    {
+        title: "Web Development",
+        items: ["React.js", "Next.js", "Tailwind CSS", "Node.js", "Express.js"]
+    },
+    {
+        title: "Cloud & Deployment",
+        items: ["Microsoft Azure", "Cloudflare Workers", "Vercel", "Digital Ocean", "Docker"]
+    },
+    {
+        title: "No-code Automation",
+        items: ["VAPI", "n8n",  "Zapier", "Make (Integromat)","Airtable"]
+    }
+];
+
+---
+
+<section class="pt-20">
+    <Container>
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white">My Technical Toolkit for Generative AI</h2>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                I always use the latest and most cutting-edge technologies to deliver powerful solutions
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {techCategories.map(category => (
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">{category.title}</h3>
+                    <ul class="space-y-2">
+                        {category.items.map(item => (
+                            <li class="text-gray-600 dark:text-gray-300">{item}</li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
+    </Container>
+</section>

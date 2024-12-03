@@ -21,17 +21,17 @@ const projects = [
 export default function Projects() {
     return (
         <section className="py-16 mt-40">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto max-w-screen-lg px-4">
                 <h2 className="text-4xl font-semibold text-center text-gray-950 dark:text-white mb-12">Projects Showcase</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
                     {projects.map((project, index) => (
-                        <div key={index} className="aspect-video relative">
+                        <div key={index} className="aspect-video relative flex flex-col items-center">
                             <Tilt 
                                 rotationFactor={6} 
                                 isRevese 
                                 style={{ transformOrigin: 'center center' }}
                                 springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-                                className="group relative rounded-lg overflow-hidden cursor-none"
+                                className="group relative rounded-lg overflow-hidden  max-w-96 cursor-none"
                             >
                                 <Cursor
                                     attachToParent
@@ -60,11 +60,11 @@ export default function Projects() {
                                 <img 
                                     src={project.image} 
                                     alt={project.title} 
-                                    className="h-48 w-full rounded-lg object-cover"
+                                    className="h-48 w-full rounded-lg object-contain"
                                 />
                             </Tilt>
-                            <div className="flex flex-col space-y-0.5 pb-0 pt-4">
-                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{project.title}</h3>
+                            <div className="flex flex-col items-center space-y-0.5 pb-0 pt-4">
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white text-center">{project.title}</h3>
                             </div>
                         </div>
                     ))}
