@@ -3,6 +3,7 @@ import { cn } from "@lib/utils"
 import Container from "./Container.astro"
 import {button} from "@tailus/themer-button"
 import Frame from "./Frame.astro"
+import { TextEffect } from "./motion-ui/TextEffect"
 ---
 
 <section class="relative  scroll-mt-24" id="home">  
@@ -13,7 +14,14 @@ import Frame from "./Frame.astro"
     <Container>
         <div class="relative pt-32 pb-2 lg:-mb-32 sm:pt-44 ml-auto">
             <div class="lg:w-2/3 text-center mx-auto">
-                <h1 class="text-gray-900 dark:text-white font-bold text-4xl sm:text-5xl md:text-6xl">Powering Your Business with AI Automation</h1>
+                <TextEffect
+                    client:load
+                    per="char"
+                    preset="fade"
+                    as="h1"
+                    text="Powering Your Business with AI Automation"
+                    className="text-gray-900 dark:text-white font-bold text-4xl sm:text-5xl md:text-6xl"
+                />
                 <p class="max-w-xl mx-auto mt-10 text-gray-700 dark:text-gray-300">I've spent the last year crafting cutting-edge AI solutions that drive business transformation. With a track record of developing intelligent systems for international clients, I turn AI potential into measurable business value.</p>
                
                 <!-- <div class="py-8 mt-12 gap-4 border-y dark:border-gray-800 flex-wrap flex justify-between">

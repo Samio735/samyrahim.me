@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+import { Tilt } from "./motion-ui/Tilt";
+import { Spotlight } from "./motion-ui/Spotlight";
 
 import ActiveCallDetail from "./components/ActiveCallDetail";
 import Button from "./components/base/Button";
@@ -86,20 +88,33 @@ export default function App() {
   };
 
   return (
-    <div className="w-[300px] min-h-[400px] rounded-3xl bg-gray-100 dark:bg-gray-800 p-4 shadow-xl">
-      {!connected ? (
-        <PhoneCallUI 
-          onAnswer={handleAnswer}
-          onReject={handleReject}
-          isConnecting={connecting}
-        />
-      ) : (
-        <ActiveCallDetail
-          assistantIsSpeaking={assistantIsSpeaking}
-          onEndCallClick={endCall}
-        />
-      )}
-    </div>
+    <Tilt 
+      rotationFactor={4}
+      isRevese
+      style={{ transformOrigin: 'center center' }}
+      springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
+      className="group relative rounded-3xl"
+    >
+      <Spotlight 
+        className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
+        size={248}
+        springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
+      />
+      <div className="w-[300px] min-h-[500px]  bg-gray-100 dark:bg-gray-800 p-4 shadow-xl">
+        {!connected ? (
+          <PhoneCallUI 
+            onAnswer={handleAnswer}
+            onReject={handleReject}
+            isConnecting={connecting}
+          />
+        ) : (
+          <ActiveCallDetail
+            assistantIsSpeaking={assistantIsSpeaking}
+            onEndCallClick={endCall}
+          />
+        )}
+      </div>
+    </Tilt>
   );
 };
 

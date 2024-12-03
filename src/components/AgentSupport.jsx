@@ -3,6 +3,8 @@ import CustomerActiveCallDetail from "./components/call/CustomerActiveCallDetail
 import Vapi from "@vapi-ai/web";
 import { isPublicKeyMissingError } from "./utils";
 import CustomerSupportUI from "./components/CustomerSupportUI";
+import { Tilt } from "./motion-ui/Tilt";
+import { Spotlight } from "./motion-ui/Spotlight";
 
 export default function AgentSupport() {
   const vapiRef = useRef(null);
@@ -84,19 +86,32 @@ export default function AgentSupport() {
   };
 
   return (
-    <div className="w-[350px] min-h-[300px] rounded-3xl  p-4 shadow-xl">
-      {!connected ? (
-        <CustomerSupportUI 
-          onStartChat={handleAnswer}
-          isConnecting={connecting}
-        />
-      ) : (
-        <CustomerActiveCallDetail
-          assistantIsSpeaking={assistantIsSpeaking}
-          onEndCallClick={endCall}
-        />
-      )}
-    </div>
+    <Tilt 
+      rotationFactor={4}
+      isRevese
+      style={{ transformOrigin: 'center center' }}
+      springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
+      className="group relative rounded-3xl"
+    >
+      <Spotlight 
+        className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
+        size={248}
+        springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
+      />
+      <div className="w-[350px] min-h-[300px]  shadow-xl">
+        {!connected ? (
+          <CustomerSupportUI 
+            onStartChat={handleAnswer}
+            isConnecting={connecting}
+          />
+        ) : (
+          <CustomerActiveCallDetail
+            assistantIsSpeaking={assistantIsSpeaking}
+            onEndCallClick={endCall}
+          />
+        )}
+      </div>
+    </Tilt>
   );
 };
 

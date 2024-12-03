@@ -7,39 +7,26 @@ import CallToAction from '../components/CallToAction.astro';
 import BentoGrid from '@components/BentoGrid.astro';
 import SpeedSection from '@components/SpeedSection.astro';
 import AboutSection from '@components/AboutSection.astro';
-import Voice from '@components/Voice.astro';
-import VoiceAlt from '@components/VoiceAlt.astro';
-import Counter from '@components/Counter.jsx';
-import Voice2 from '@components/Voice2.astro';
 import Workflows from '@components/Workflows.astro';
 import { cn } from "@lib/utils"
 import Container from "../components/Container.astro"
 import {button} from "@tailus/themer-button"
 import Frame from "../components/Frame.astro"
+import LetsTalk from '../components/LetsTalk.astro';
+import AIAssistant from '@components/Offers/AIAssistant.astro';
+import CustomSolutions from '@components/Offers/CustomSolutions.astro';
+import DataAnalytics from '@components/Offers/DataAnalytics.astro';
+import AutomatedWorkflows from '@components/Offers/AutomatedWorkflows.astro';
+import Offers from '@components/Offers.astro';
+import Projects from '@components/Projects';
 
 ---
 
 <Layout title="Welcome to Astrolus.">
 	<main class="space-y-16 sm:space-y-28 lg:space-y-32 pb-40 overflow-clip">
 		<HeroSection/>
-		<Voice />
-		<VoiceAlt />
-		<Voice2 />
-<Workflows />
-
-<div class="mt-10 m flex flex-col  items-center flex-wrap justify-center gap-6">
-	<h2 class="text-gray-950 dark:text-white text-4xl font-semibold  italic">Let's Talk</h2>
-	<p class="text-center max-w-md  text-gray-950 dark:text-white">Let's Bring Your AI Vision to Life
-Book a free 30-minute consultation and discover how custom AI can solve your most pressing business challenges.</p>
-<div class="w-fit">                    <Frame>
-                      <a href="https://www.linkedin.com/in/samy-rahim/" class={cn(button.primary.lg, "relative z-[1]")}>
-                       Connect with me on linkedin
-                      </a>
-                    </Frame>
-					</div>
-
-                </div>
-				<!-- <CallToAction/> -->
-
+		<Projects client:load />
+		<Offers />
+		<LetsTalk />
 	</main>
 </Layout>

@@ -1,5 +1,9 @@
 import { useState, useRef } from "react";
 import ChatBubble from "./ChatBubble";
+import { Tilt } from "./motion-ui/Tilt";
+import { Spotlight } from "./motion-ui/Spotlight";
+import { Cursor } from './motion-ui/Cursor';
+import { MouseIcon } from './MouseIcon';
 
 export default function ChatContainer() {
     const [messages, setMessages] = useState([
@@ -36,50 +40,80 @@ export default function ChatContainer() {
     };
 
     return (
-        <div className="w-full max-w-[500px] h-[400px] relative rounded-t-xl flex flex-col"   
-        style={{boxShadow: "0 2px 4px rgba(0,0,0,0.1)"}}>
-            {/* Header */}
-            <div className="flex items-center gap-2 rounded-t-xl px-4 py-4 bg-slate-700">
-                <span className="text-white">AI Assistant</span>
-                <div className={`h-2 w-2 rounded-full ${isLoading ? 'bg-yellow-400' : 'bg-green-400'}`}></div>
-            </div>
+        <Tilt 
+            rotationFactor={4}
+            isRevese
+            style={{ transformOrigin: 'center center' }}
+            springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
+            className="group relative"
+        >
+            <Spotlight 
+                className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
+                size={248}
+                springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
+            />
+            <div className="w-full max-w-[500px] h-[400px] relative rounded-t-xl flex flex-col"   
+                style={{boxShadow: "0 2px 4px rgba(0,0,0,0.1)"}}>
+                {/* Header */}
+                <div className="flex items-center gap-2 rounded-t-xl px-4 py-4 bg-blue-500">
+                    <span className="text-white">AI Assistant</span>
+                    <div className={`h-2 w-2 rounded-full ${isLoading ? 'bg-yellow-400' : 'bg-green-400'}`}></div>
+                </div>
 
-            {/* Messages container */}
-            <div className="flex-1 overflow-y-auto bg-slate-50 ">
-                <div className="flex flex-col-reverse gap-2 p-4">
-                    {[...messages].reverse().map((msg, index) => (
-                        <ChatBubble 
-                            key={index}
-                            role={msg.role}
-                            content={msg.content}
-                        />
-                    ))}
+                {/* Messages container */}
+                <div className="flex-1 overflow-y-auto bg-slate-50 ">
+                    <div className="flex flex-col-reverse gap-2 p-4">
+                        {[...messages].reverse().map((msg, index) => (
+                            <ChatBubble 
+                                key={index}
+                                role={msg.role}
+                                content={msg.content}
+                            />
+                        ))}
+                    </div>
+                </div>
+
+                {/* Input section */}
+                <div className="relative p-4 bg-white">
+                    <input 
+                        ref={inputRef}
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && sendMessage(inputValue)}
+                        className="w-full bg-slate-50 text-black rounded-lg px-4 py-3 shadow-md transition-transform hover:scale-[1.05] focus:scale-[1.05] focus:outline-none" 
+                        placeholder="Type a message"
+                        disabled={isLoading}
+                    />
+                    <button 
+                        onClick={() => sendMessage(inputValue)}
+                        disabled={isLoading}
+                        className="relative absolute right-6 top-1/2 -translate-y-1/2 opacity-45 hover:opacity-100 disabled:opacity-25 transition-transform hover:scale-110 cursor-none"
+                    >
+                        <Cursor
+                          attachToParent
+                          variants={{
+                            initial: { scale: 0.3, opacity: 0 },
+                            animate: { scale: 1, opacity: 1 },
+                            exit: { scale: 0.3, opacity: 0 },
+                          }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute z-50"
+                        >
+                          <div className="flex items-center">
+                            <MouseIcon className="h-6 w-6" />
+                            <div className="ml-2 rounded-[4px] bg-green-500 px-2 py-0.5 text-neutral-50 whitespace-nowrap">
+                              Send message
+                            </div>
+                          </div>
+                        </Cursor>
+                        <svg className="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="rgb(51 65 85)">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                        </svg>
+                    </button>
                 </div>
             </div>
-
-            {/* Input section */}
-            <div className="relative p-4 bg-white ">
-                <input 
-                    ref={inputRef}
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && sendMessage(inputValue)}
-                    className="w-full  bg-slate-50 text-black  rounded-lg px-4 py-3" 
-                    placeholder="Type a message"
-                    disabled={isLoading}
-                />
-                <button 
-                    onClick={() => sendMessage(inputValue)}
-                    disabled={isLoading}
-                    className="absolute right-6 top-1/2 -translate-y-1/2  opacity-45 hover:opacity-100 disabled:opacity-25"
-                >
-                    <svg className="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="rgb(51 65 85)">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                    </svg>
-                </button>
-            </div>
-        </div>
+        </Tilt>
     )
 }
 

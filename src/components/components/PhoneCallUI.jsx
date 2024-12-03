@@ -1,8 +1,10 @@
 import React from 'react';
+import { Cursor } from '../motion-ui/Cursor';
+import { MouseIcon } from '../MouseIcon';
 
 const PhoneCallUI = ({ onAnswer, onReject, isConnecting }) => {
   return (
-    <div className="h-full flex flex-col items-center justify-between py-8 bg-gray-800 dark:bg-gray-100 p-6 rounded-lg">
+    <div className="min-h-[450px] flex flex-col items-center justify-between py-8 bg-gray-800 dark:bg-gray-100 p-6 rounded-lg">
       <div className="flex flex-col items-center space-y-4">
         <div className="w-24 h-24 rounded-full bg-gray-700 dark:bg-gray-200 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 text-gray-300 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -18,7 +20,7 @@ const PhoneCallUI = ({ onAnswer, onReject, isConnecting }) => {
         </div>
       </div>
 
-      <div className="flex justify-center space-x-8">
+      <div className="flex justify-center mb-10 space-x-8">
         <button
           onClick={onReject}
           disabled={isConnecting}
@@ -34,10 +36,27 @@ const PhoneCallUI = ({ onAnswer, onReject, isConnecting }) => {
         <button
           onClick={onAnswer}
           disabled={isConnecting}
-          className={`w-16 h-16 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-white shadow-lg transition-transform hover:scale-105 ${
+          className={`relative w-16 h-16 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-white shadow-lg transition-transform hover:scale-105 cursor-none ${
             isConnecting ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
+          <Cursor
+            attachToParent
+            variants={{
+              initial: { scale: 0.3, opacity: 0 },
+              animate: { scale: 1, opacity: 1 },
+              exit: { scale: 0.3, opacity: 0 },
+            }}
+            transition={{ duration: 0.2 }}
+            className="absolute z-50"
+          >
+            <div className="flex items-center">
+              <MouseIcon className="h-6 w-6" />
+              <div className="ml-2 rounded-[4px] bg-green-500 px-2 py-0.5 text-neutral-50 whitespace-nowrap">
+                Respond to call
+              </div>
+            </div>
+          </Cursor>
           <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
           </svg>
