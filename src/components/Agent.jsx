@@ -14,6 +14,7 @@ export default function App() {
   const [connected, setConnected] = useState(false);
   const [assistantIsSpeaking, setAssistantIsSpeaking] = useState(false);
   const [volumeLevel, setVolumeLevel] = useState(0);
+  const [currentMessage, setCurrentMessage] = useState("");
 
   const { showPublicKeyInvalidMessage, setShowPublicKeyInvalidMessage } =
     usePublicKeyInvalid();
@@ -57,6 +58,14 @@ export default function App() {
       // Various assistant messages can come back (like function calls, transcripts, etc)
 vapi.on("message", (message) => {
   console.log(message);
+  if (message.type === "tool-calls") {
+    const toolCall = message.toolCalls[0];
+    if (toolCall.function.name === "storeLead") {
+      const args = toolCall.function.arguments;
+      const action = args.isBuyer ? "buy" : "sell";
+      setCurrentMessage(`You want to ${action} ${args.Property}`);
+    }
+  }
 });
 
     };
@@ -93,7 +102,7 @@ vapi.on("message", (message) => {
   };
 
   return (
-    <Tilt 
+    <div>    <Tilt 
       rotationFactor={4}
       isRevese
       style={{ transformOrigin: 'center center' }}
@@ -106,6 +115,9 @@ vapi.on("message", (message) => {
         springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
       />
       <div className="w-[300px] min-h-[500px]  bg-gray-100 dark:bg-gray-800 p-4 shadow-xl">
+   
+        
+      
         <PhoneCallUI 
           onAnswer={handleAnswer}
           onReject={handleReject}
@@ -116,6 +128,11 @@ vapi.on("message", (message) => {
         />
       </div>
     </Tilt>
+      <div className={`mt-4 p-2 font-light w-[300px] ${currentMessage ? 'text-green-600 dark:text-green-400' : ''}`}>
+         <span className="font-bold">   Result: </span> {currentMessage||"Nothing yet... tell the assistant about the property that you want to sell or buy."}
+          </div>
+    </div>
+
   );
 };
 
