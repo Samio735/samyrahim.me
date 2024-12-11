@@ -45,7 +45,7 @@ export default function ChatContainer() {
             isRevese
             style={{ transformOrigin: 'center center' }}
             springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-            className="group relative rounded-xl"
+            className="group relative rounded-xl "
         >
             <Spotlight 
                 className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
@@ -61,7 +61,7 @@ export default function ChatContainer() {
                 </div>
 
                 {/* Messages container */}
-                <div className="flex-1 overflow-y-auto bg-slate-50 ">
+                <div className="flex-1 overflow-y-auto bg-sky-50 ">
                     <div className="flex flex-col-reverse gap-2 p-4">
                         {[...messages].reverse().map((msg, index) => (
                             <ChatBubble 
@@ -74,14 +74,14 @@ export default function ChatContainer() {
                 </div>
 
                 {/* Input section */}
-                <div className="relative p-4 bg-white">
+                <div className="relative p-4 bg-sky-50">
                     <input 
                         ref={inputRef}
                         type="text"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={(e) => e.key === "Enter" && sendMessage(inputValue)}
-                        className="w-full bg-slate-50 text-black rounded-lg px-4 py-3 pr-12 shadow-md transition-transform hover:scale-[1.05] focus:scale-[1.05] focus:outline-none" 
+                        className="w-full bg-white text-black rounded-lg px-4 py-3 pr-12 shadow-md transition-transform hover:scale-[1.05] focus:scale-[1.05] focus:outline-none" 
                         placeholder="Type a message"
                         disabled={isLoading}
                     />

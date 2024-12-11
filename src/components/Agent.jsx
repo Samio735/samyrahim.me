@@ -54,6 +54,11 @@ export default function App() {
           setShowPublicKeyInvalidMessage(true);
         }
       });
+      // Various assistant messages can come back (like function calls, transcripts, etc)
+vapi.on("message", (message) => {
+  console.log(message);
+});
+
     };
 
     setupVapiListeners();
@@ -67,7 +72,7 @@ export default function App() {
   const handleAnswer = async () => {
     try {
       setConnecting(true);
-      await vapiRef.current?.start(assistantOptions);
+      await vapiRef.current?.start("7d85d053-4f81-4195-b467-faf6fe32445e");
     } catch (error) {
       console.error('Failed to start call:', error);
       setConnecting(false);
@@ -101,88 +106,17 @@ export default function App() {
         springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
       />
       <div className="w-[300px] min-h-[500px]  bg-gray-100 dark:bg-gray-800 p-4 shadow-xl">
-        {!connected ? (
-          <PhoneCallUI 
-            onAnswer={handleAnswer}
-            onReject={handleReject}
-            isConnecting={connecting}
-          />
-        ) : (
-          <ActiveCallDetail
-            assistantIsSpeaking={assistantIsSpeaking}
-            onEndCallClick={endCall}
-          />
-        )}
+        <PhoneCallUI 
+          onAnswer={handleAnswer}
+          onReject={handleReject}
+          isConnecting={connecting}
+          connected={connected}
+          assistantIsSpeaking={assistantIsSpeaking}
+          onEndCallClick={endCall}
+        />
       </div>
     </Tilt>
   );
-};
-
-const assistantOptions = {
-  name: "Bright Future Real Estate Front Desk",
-  firstMessage:
-    " Hey ! This is Sara from Bright Future Real Estate. How's your day going so far?",
-  transcriber: {
-    provider: "deepgram",
-    model: "nova-2",
-    language: "en-US",
-  },
-  voice: {
-    provider: "playht",
-    voiceId: "jennifer",
-  },
-  model: {
-    provider: "openai",
-    model: "gpt-4o-mini",
-    messages: [
-      {
-        role: "system",
-        content: `You are a voice assistant for Bright Future Real Estate, a real estate agency assisting home buyers and sellers located at 789 Dream Street, Dubai. The agency operates from 9 AM to 6 PM, Monday through Saturday, and is closed on Sundays.
-
-Bright Future Real Estate provides services for buying and selling property to the local Dubai community. The lead agent is Karim Al-Fayed.
-
-You are tasked with calling home owners to find out if they have a property they're willing to sell or if they are interested in buying property. If they are, your goal is to gather necessary information in a friendly and engaging manner like follows:
-
-1. Introduce yourself and the agency.
-2. Ask if they are considering selling their property.
-3. If they are not, ask if they are interested in buying any property.
-4. Gather their full name and contact information.
-5. If interested in buying, ask for their preferences (location, type of property, budget).
-6. If interested in selling, ask for details about their property (location, type, size).
-7. Confirm all details with the caller and thank them for their time.
-
-
-- Keep all responses short and simple. Use casual language, phrases like "Umm...", "Well...", and "I mean" are preferred.
-- This is a voice conversation, so keep your responses short, like in a real conversation. Don't ramble for too long.
-
-Example Script:
-
-**Assistant:** Hey Joseph! This is Karim from Bright Future Real Estate. How's your day going so far?
-
-**Owner:** Good, thanks. How about you?
-
-**Assistant:** Oh, just another sunny day in Dubai's real estate world! Quick question for you. Do you have a property you're thinking about selling?
-
-**Owner:** Not really.
-
-**Assistant:** Got it! Well, what about buying? Any chance you're on the lookout for a new spot, or maybe know someone who is?
-
-**Owner:** Actually, I might be looking.
-
-**Assistant:** Sweet! We can definitely help with that. Can I grab your full name and a contact number real quick?
-
-**Owner:** Sure, it's Fatima Ali and my number is 050-6789-432.
-
-**Assistant:** Thanks, Fatima! So, what kind of place are you dreaming of? Got any specific location or budget in mind?
-
-**Owner:** I'm looking for a 2-bedroom apartment in the Marina area, budget around AED 1.5 million.
-
-**Assistant:** Fantastic choice! I'll jot that down. Perfect, Fatima! We'll get working on it and be in touch super soon. Thanks for chatting with me!
-
-`,
-      },
-    ],
-  },
 };
 
 const usePublicKeyInvalid = () => {

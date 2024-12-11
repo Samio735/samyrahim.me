@@ -4,16 +4,14 @@ import { MouseIcon } from '../MouseIcon';
 
 export default function CustomerSupportUI({ onStartChat, isConnecting }) {
   return (
-    <div className="flex h-full flex-col items-center gap-4 bg-gray-800 dark:bg-gray-100 p-6 rounded-lg">
-      <div className="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center">
-        <img 
-          src="/headset-svgrepo-com.svg" 
-          alt="Headset" 
-          className="h-12 w-12 text-blue-500"
-        />
+    <div className="flex h-full flex-col items-center gap-4 bg-sky-50 p-6 rounded-lg">
+      <div className="w-24 h-24 rounded-full bg-white text-blue-400 flex items-center justify-center">
+        <svg  className='w-20' viewBox="0 0 24 24"  fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 13H6.75C7.44036 13 8 13.5596 8 14.25V17.75C8 18.4404 7.44036 19 6.75 19H6C4.34315 19 3 17.6569 3 16C3 14.3431 4.34315 13 6 13ZM6 13V11C6 7.68629 8.68629 5 12 5C15.3137 5 18 7.68629 18 11V13M18 13H17.25C16.5596 13 16 13.5596 16 14.25V17.75C16 18.4404 16.5596 19 17.25 19H18C19.6569 19 21 17.6569 21 16C21 14.3431 19.6569 13 18 13Z" stroke="#172554" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
       </div>
-      <h2 className="text-xl font-semibold text-white dark:text-gray-800">Dental Support Assistant</h2>
-      <p className="text-gray-300 dark:text-gray-600 text-center text-sm">
+      <h2 className="text-xl font-semibold text-gray-800">Dental Support Assistant</h2>
+      <p className="text-gray-600 text-center text-sm">
         Take a call with our AI assistant for appointments and inquiries
       </p>
       <button

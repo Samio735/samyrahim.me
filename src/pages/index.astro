@@ -1,22 +1,7 @@
 ---
-import Stats from '../components/Stats.astro';
 import HeroSection from '../components/HeroSection.astro';
 import Layout from '../layouts/Layout.astro';
-import Testimonials from '../components/Testimonials.astro';
-import CallToAction from '../components/CallToAction.astro';
-import BentoGrid from '@components/BentoGrid.astro';
-import SpeedSection from '@components/SpeedSection.astro';
-import AboutSection from '@components/AboutSection.astro';
-import Workflows from '@components/Workflows.astro';
-import { cn } from "@lib/utils"
-import Container from "../components/Container.astro"
-import {button} from "@tailus/themer-button"
-import Frame from "../components/Frame.astro"
 import LetsTalk from '../components/LetsTalk.astro';
-import AIAssistant from '@components/Offers/AIAssistant.astro';
-import CustomSolutions from '@components/Offers/CustomSolutions.astro';
-import DataAnalytics from '@components/Offers/DataAnalytics.astro';
-import AutomatedWorkflows from '@components/Offers/AutomatedWorkflows.astro';
 import Offers from '@components/Offers.astro';
 import Technologies from '@components/Technologies.astro';
 import Projects from '@components/Projects';
@@ -27,8 +12,8 @@ import Projects from '@components/Projects';
 	<main class="space-y-16 sm:space-y-28 lg:space-y-32 pb-40 overflow-clip">
 		<HeroSection/>
 		<Projects client:load />
-		<Technologies />
 		<Offers />
+		<Technologies />
 		<LetsTalk />
 	</main>
 </Layout>
