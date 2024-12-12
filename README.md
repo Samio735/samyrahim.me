@@ -15,8 +15,10 @@ A modern landing page built with Astro showcasing AI automation services and sol
 - [Tailwind CSS](https://tailwindcss.com)
 - [Tailus](https://tailus.io) components
 - [motion-primitives](https://motion-primitives.com/) components
-- [VAPI](https://vapi.ai/) Voice AI agent
-- [Cloudflare Workers AI](https://www.cloudflare.com/developer-platform/products/workers-ai/) for the chatbot
+- [VAPI](https://vapi.ai/) Voice AI agents
+- [Azure Open AI](https://azure.microsoft.com/en-us/products/ai-services/openai-service) gpt-4o-mini for the chatbots
+- [Vercel](vercel.com) Front-end hosting
+- [Cloudflare Workers](https://www.cloudflare.com/developer-platform/products/workers/) for the chatbot
 
 
 
