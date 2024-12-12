@@ -88,7 +88,7 @@ export default function WhatsAppContainer() {
         isRevese
         style={{ transformOrigin: "center center" }}
         springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-        className="group relative rounded-[2.5rem] w-fit"
+        className="group relative rounded-[2rem] w-fit"
       >
         <Spotlight
           className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
@@ -96,8 +96,8 @@ export default function WhatsAppContainer() {
           springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
         />
         {/* Phone frame styling */}
-        <div className="w-[400px] h-[550px] pb-6 relative rounded-[2.5rem] flex flex-col overflow-hidden bg-gray-100 dark:bg-gray-800 p-4">
-          <div className="w-full h-full relative rounded-[2rem] flex flex-col overflow-hidden">
+        <div className="w-[380px] h-[580px] pb-6 relative  flex flex-col overflow-hidden bg-gray-100 dark:bg-gray-800  p-4 ">
+          <div className="w-full h-full relative rounded-[1rem] flex flex-col overflow-hidden">
             {/* WhatsApp Header */}
             <div className="flex items-center gap-3 px-4 py-3 bg-[#075E54]">
               <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
