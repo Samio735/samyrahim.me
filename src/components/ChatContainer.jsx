@@ -7,21 +7,28 @@ import { MouseIcon } from './MouseIcon';
 
 export default function ChatContainer() {
     const [messages, setMessages] = useState([
-        { role: "assistant", content: "Hi there! How can I help you with your real estate needs today?" }
+        { role: "assistant", content: "Hi! Welcome to Bright Smile Dental Clinic. How can I assist you today?" }
     ]);
     const [inputValue, setInputValue] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const inputRef = useRef(null);
+    const [appointment, setAppointment] = useState("");
 
     const sendMessage = async (userMessage) => {
         if (!userMessage.trim()) return;
         
+        console.log('Sending message:', userMessage);
         const newMessages = [...messages, { role: "user", content: userMessage }];
         setMessages(newMessages);
         setInputValue("");
         setIsLoading(true);
         try {
-            const response = await fetch("https://flat-voice-77cf.samyrahim07.workers.dev", {
+            console.log('Request payload:', {
+                messages: newMessages.slice(0, -1),
+                prompt: userMessage
+            });
+            
+            const response = await fetch("http://localhost:8787", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -31,15 +38,44 @@ export default function ChatContainer() {
             });
             
             const data = await response.json();
-            setMessages([...newMessages, { role: "assistant", content: data.response }]);
+            console.log('API response:', data);
+            
+            let parsedResponse;
+            try {
+                parsedResponse = typeof data.response === 'string' 
+                    ? JSON.parse(data.response) 
+                    : data.response;
+                console.log('Parsed response:', parsedResponse);
+                
+                // Add message 
+                setMessages([
+                    ...newMessages, 
+                    { 
+                        role: "assistant", 
+                        content: parsedResponse.message,
+                    }
+                ]);
+                setAppointment(parsedResponse.appointment);
+            } catch (error) {
+                console.error("Failed to parse response:", error);
+                setMessages([
+                    ...newMessages, 
+                    { 
+                        role: "assistant", 
+                        content: "Sorry, I couldn't process that response.",
+                        appointment: null
+                    }
+                ]);
+            }
         } catch (error) {
-            console.error("Failed to get AI response:", error);
+            console.error("API call failed:", error);
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
+        <div>
         <Tilt 
             rotationFactor={4}
             isRevese
@@ -56,7 +92,7 @@ export default function ChatContainer() {
                 style={{boxShadow: "0 2px 4px rgba(0,0,0,0.1)"}}>
                 {/* Header */}
                 <div className="flex items-center gap-2  px-4 py-4 bg-blue-500">
-                    <span className="text-white">AI Assistant</span>
+                    <span className="text-white">Bright Smile Dental Assistant</span>
                     <div className={`h-2 w-2 rounded-full ${isLoading ? 'bg-yellow-400' : 'bg-green-400'}`}></div>
                 </div>
 
@@ -64,11 +100,13 @@ export default function ChatContainer() {
                 <div className="flex-1 overflow-y-auto bg-sky-50 ">
                     <div className="flex flex-col-reverse gap-2 p-4">
                         {[...messages].reverse().map((msg, index) => (
-                            <ChatBubble 
-                                key={index}
-                                role={msg.role}
-                                content={msg.content}
-                            />
+                            <div key={index}>
+                                <ChatBubble 
+                                    role={msg.role}
+                                    content={msg.content}
+                                />
+                
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -120,6 +158,12 @@ export default function ChatContainer() {
                 </div>
             </div>
         </Tilt>
+         
+                                    <div className="mt-2 p-2">
+                                   <span className="font-semibold">     Result:</span> {appointment|| "No appointment booked yet..."}
+                                    </div>
+                       
+        </div>
     )
 }
 

@@ -12,6 +12,7 @@ export default function AgentSupport() {
   const [connected, setConnected] = useState(false);
   const [assistantIsSpeaking, setAssistantIsSpeaking] = useState(false);
   const [volumeLevel, setVolumeLevel] = useState(0);
+  const [currentMessage, setCurrentMessage] = useState("");
 
   const { showPublicKeyInvalidMessage, setShowPublicKeyInvalidMessage } =
     usePublicKeyInvalid();
@@ -52,6 +53,20 @@ export default function AgentSupport() {
           setShowPublicKeyInvalidMessage(true);
         }
       });
+
+      vapi.on("message", (message) => {
+        console.log(message);
+        if (message.type === "tool-calls") {
+          const toolCall = message.toolCalls[0];
+          if (toolCall.function.name === "bookSlot") {
+            const args = JSON.parse(toolCall.function.arguments);
+            const date = new Date(args.time).toLocaleString();
+            setCurrentMessage(
+              `Appointment booked for ${args.LeadName} on ${date}. Details: ${args.description}`
+            );
+          }
+        }
+      });
     };
 
     setupVapiListeners();
@@ -65,7 +80,7 @@ export default function AgentSupport() {
   const handleAnswer = async () => {
     try {
       setConnecting(true);
-      await vapiRef.current?.start(assistantOptions);
+      await vapiRef.current?.start("3281a528-842a-40df-87d3-6895ed9c4e57");
     } catch (error) {
       console.error('Failed to start call:', error);
       setConnecting(false);
@@ -86,6 +101,7 @@ export default function AgentSupport() {
   };
 
   return (
+    <div>
     <Tilt 
       rotationFactor={4}
       isRevese
@@ -105,65 +121,22 @@ export default function AgentSupport() {
             isConnecting={connecting}
           />
         ) : (
-          <CustomerActiveCallDetail
-            assistantIsSpeaking={assistantIsSpeaking}
-            onEndCallClick={endCall}
-          />
+          <>
+            <CustomerActiveCallDetail
+              assistantIsSpeaking={assistantIsSpeaking}
+              onEndCallClick={endCall}
+            />
+          
+          </>
         )}
       </div>
     </Tilt>
+      <div className={`mt-4 p-2 font-light ${currentMessage ? 'text-green-600 dark:text-green-400' : ''}`}>
+              <span className="font-bold">Result: </span> 
+              {currentMessage || "No appointment booked yet... "}
+            </div>
+            </div>
   );
-};
-
-const assistantOptions = {
-  name: "Bright Smile Dental Clinic Assistant",
-  firstMessage:
-    "Hi! I'm Dina from Bright Smile Dental Clinic. How can I help you today?",
-  transcriber: {
-    provider: "deepgram",
-    model: "nova-2",
-    language: "en-US",
-  },
-  voice: {
-    provider: "playht",
-    voiceId: "jennifer",
-  },
-  model: {
-    provider: "openai",
-    model: "gpt-4o-mini",
-    messages: [
-      {
-        role: "system",
-        content: `You are a voice assistant for Bright Smile Dental Clinic, a modern dental practice located at 123 Health Avenue, Dubai. The clinic operates from 8 AM to 8 PM, Monday through Saturday, and is closed on Sundays.
-
-Bright Smile Dental Clinic provides comprehensive dental care services including:
-- Regular check-ups and cleaning
-- Emergency dental care
-- Cosmetic dentistry
-- Orthodontics
-- Root canal treatment
-- Dental implants
-
-You are tasked with handling patient inquiries and appointments. Your goals are to:
-
-1. Greet callers warmly and professionally
-2. Handle appointment scheduling and modifications
-3. Answer questions about services and treatments
-4. Collect patient information when needed
-5. Handle emergency scheduling
-6. Provide basic information about procedures
-7. Direct urgent cases appropriately
-
-Keep responses conversational and reassuring. Use phrases like:
-- "I understand that dental visits can be concerning..."
-- "Let me help you with that..."
-- "Our experienced dentists will take great care of you..."
-
-Example conversation:
-`,
-      },
-    ],
-  },
 };
 
 const usePublicKeyInvalid = () => {
