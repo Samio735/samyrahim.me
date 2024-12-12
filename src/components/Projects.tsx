@@ -43,8 +43,41 @@ const projects = [
     title: "AI Productivity Chrome Extension",
     image: "/intentional.png",
     description: [
-      "A browser extension that leverages AI to boost productivity by analyzing browsing patterns and providing smart suggestions and automation. The extension learns from user behavior to identify time-wasting patterns and offers personalized productivity recommendations.",
-      "Features include intelligent tab management, focus mode with AI-driven website blocking, and smart bookmarking that automatically organizes saved content. The extension also provides detailed productivity insights and integrates with popular task management tools.",
+      `Intentional AI is a groundbreaking Chrome extension that leverages artificial intelligence to help professionals achieve deep work and maintain laser-focused productivity. By intelligently blocking distracting websites and aligning digital environments with user-defined goals, the application represents a cutting-edge approach to personal productivity optimization.`,
+      " ",
+      `<strong>The Problem</strong>`,
+      `In today's hyper-connected digital landscape, professionals face unprecedented challenges:`,
+      `<ul class="list-disc pl-6">
+        <li>Constant digital distractions fragment attention</li>
+        <li>Meaningful work often gets postponed due to browser-based interruptions</li>
+        <li>Traditional productivity tools lack adaptive, intelligent mechanisms to support deep work</li>
+      </ul>`,
+      " ",
+      `<strong>Solution: AI-Powered Intelligent Focus Management</strong>`,
+      `Intentional AI introduces a revolutionary approach to productivity:`,
+      `<strong>Key Features</strong>`,
+      `<ul class="list-disc pl-6">
+        <li>Intelligent Goal Setting: Users define specific work objectives for each session</li>
+        <li>Dynamic Website Blocking: AI analyzes and restricts access to sites unrelated to current goals</li>
+        <li>Seamless Chrome Integration: Lightweight, non-intrusive extension design</li>
+      </ul>`,
+      " ",
+      `<strong>Technical Implementation</strong>`,
+      `Core Technologies:`,
+      `<ul class="list-disc pl-6">
+        <li>Chrome Extension Architecture</li>
+        <li>gpt-3.5 based AI Agent for Intelligent Content Filtering</li>
+        <li>Real-time Website Blocking Mechanism</li>
+      </ul>`,
+      " ",
+      `<strong>Impact and Achievements</strong>`,
+      `<ul class="list-disc pl-6">
+        <li>User Adoption: 100+ active users within first launch cycle</li>
+        <li>Community Recognition: #2 Product of the Day on Product Hunt</li>
+        <li>User Feedback: Significant productivity improvements reported</li>
+      </ul>`,
+      " ",
+      `This was the first AI agent that I created and I fell in love with them ever since`,
     ],
   },
 ];
@@ -139,11 +172,26 @@ export default function Projects() {
               {selectedProject.title}
             </h3>
             <div className="flex justify-center">
-              <img
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                className="  mt-2  mb-4 rounded"
-              />
+              {selectedProject.title === "AI Productivity Chrome Extension" ? (
+                <div className="w-full aspect-video">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/SFdi0T8Fapk"
+                    title="Intentional AI Demo"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="rounded mt-2 mb-4"
+                  ></iframe>
+                </div>
+              ) : (
+                <img
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  className="mt-2 mb-4 rounded"
+                />
+              )}
             </div>
             <div className="space-y-4">
               {selectedProject.description.map((paragraph, index) => (
