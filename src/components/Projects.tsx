@@ -3,6 +3,16 @@ import { Tilt } from "./motion-ui/Tilt";
 import { Spotlight } from "./motion-ui/Spotlight";
 import { Cursor } from "./motion-ui/Cursor";
 import { MouseIcon } from "./MouseIcon";
+import {
+  MorphingDialog,
+  MorphingDialogTrigger,
+  MorphingDialogContent,
+  MorphingDialogTitle,
+  MorphingDialogImage,
+  MorphingDialogClose,
+  MorphingDialogDescription,
+  MorphingDialogContainer,
+} from "./motion-ui/morphing-dialog";
 
 const projects = [
   {
@@ -143,30 +153,25 @@ const projects = [
 ];
 
 export default function Projects() {
-  const [selectedProject, setSelectedProject] = useState<
-    (typeof projects)[0] | null
-  >(null);
-
   return (
-    <>
-      <section className="py-16 mt-40">
-        <div className="container mx-auto max-w-screen-lg px-4">
-          <h2 className="text-4xl font-semibold text-center text-gray-950 dark:text-white mb-12">
-            Projects Showcase
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className="aspect-video relative flex flex-col items-center"
-                onClick={() => setSelectedProject(project)}
-              >
+    <section className="py-16 mt-40">
+      <div className="container mx-auto max-w-screen-lg px-4">
+        <h2 className="text-4xl font-semibold text-center text-gray-950 dark:text-white mb-12">
+          Projects Showcase
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+          {projects.map((project, index) => (
+            <MorphingDialog
+              key={index}
+              transition={{ type: "spring", bounce: 0.05, duration: 0.15 }}
+            >
+              <MorphingDialogTrigger className="aspect-video relative flex flex-col items-center">
                 <Tilt
                   rotationFactor={6}
                   isRevese
                   style={{ transformOrigin: "center center" }}
                   springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-                  className="group relative rounded-lg overflow-hidden  max-w-96 cursor-none"
+                  className="group relative rounded-lg overflow-hidden max-w-96 cursor-none"
                 >
                   <Cursor
                     attachToParent
@@ -175,9 +180,7 @@ export default function Projects() {
                       animate: { scale: 1, opacity: 1 },
                       exit: { scale: 0.3, opacity: 0 },
                     }}
-                    transition={{
-                      duration: 0.2,
-                    }}
+                    transition={{ duration: 0.2 }}
                     className="absolute z-50"
                   >
                     <div className="flex items-center">
@@ -192,79 +195,72 @@ export default function Projects() {
                     size={248}
                     springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
                   />
-                  <img
+                  <MorphingDialogImage
                     src={project.image}
                     alt={project.title}
                     className="h-48 w-full rounded-lg object-contain"
                   />
                 </Tilt>
                 <div className="flex flex-col items-center space-y-0.5 pb-0 pt-4">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white text-center">
+                  <MorphingDialogTitle className="text-xl font-semibold text-gray-900 dark:text-white text-center">
                     {project.title}
-                  </h3>
+                  </MorphingDialogTitle>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              </MorphingDialogTrigger>
 
-      {selectedProject && (
-        <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
-          onClick={() => setSelectedProject(null)}
-        >
-          <div
-            className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-screen-md w-full h-[95vh] overflow-auto relative 
-            scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 
-            scrollbar-track-gray-100 dark:scrollbar-track-gray-800 
-            scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-              onClick={() => setSelectedProject(null)}
-            >
-              ✕
-            </button>
-
-            <h3 className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
-              {selectedProject.title}
-            </h3>
-            <div className="flex justify-center">
-              {selectedProject.title === "AI Productivity Chrome Extension" ? (
-                <div className="w-full aspect-video">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src="https://www.youtube.com/embed/SFdi0T8Fapk"
-                    title="Intentional AI Demo"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="rounded mt-2 mb-4"
-                  ></iframe>
-                </div>
-              ) : (
-                <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className="mt-2 mb-4 rounded"
-                />
-              )}
-            </div>
-            <div className="space-y-4">
-              {selectedProject.description.map((paragraph, index) => (
-                <p
-                  key={index}
-                  className="text-gray-700 dark:text-gray-300 text-lg"
-                  dangerouslySetInnerHTML={{ __html: paragraph }}
-                ></p>
-              ))}
-            </div>
-          </div>
+              <MorphingDialogContainer>
+                <MorphingDialogContent
+                  style={{ borderRadius: "24px" }}
+                  className="pointer-events-auto relative flex h-[95vh] w-full flex-col overflow-hidden border border-zinc-950/10 bg-white dark:border-zinc-50/10 dark:bg-zinc-900 sm:w-[800px]"
+                >
+                  <MorphingDialogImage
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full object-cover"
+                  />
+                  <div className="p-6 overflow-auto">
+                    <MorphingDialogTitle className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
+                      {project.title}
+                    </MorphingDialogTitle>
+                    <MorphingDialogDescription
+                      className="space-y-4"
+                      disableLayoutAnimation
+                      variants={{
+                        initial: { opacity: 0, scale: 0.8, y: 100 },
+                        animate: { opacity: 1, scale: 1, y: 0 },
+                        exit: { opacity: 0, scale: 0.8, y: 100 },
+                      }}
+                    >
+                      {project.description.map((paragraph, index) => (
+                        <p
+                          key={index}
+                          className="text-gray-700 dark:text-gray-300 text-lg"
+                          dangerouslySetInnerHTML={{ __html: paragraph }}
+                        />
+                      ))}
+                      {project.title === "AI Productivity Chrome Extension" && (
+                        <div className="w-full aspect-video mt-4">
+                          <iframe
+                            width="100%"
+                            height="100%"
+                            src="https://www.youtube.com/embed/SFdi0T8Fapk"
+                            title="Intentional AI Demo"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="rounded"
+                          ></iframe>
+                        </div>
+                      )}
+                    </MorphingDialogDescription>
+                  </div>
+                  <MorphingDialogClose className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" />
+                </MorphingDialogContent>
+              </MorphingDialogContainer>
+            </MorphingDialog>
+          ))}
         </div>
-      )}
-    </>
+      </div>
+    </section>
   );
 }

@@ -7,6 +7,7 @@ import Button from "./components/base/Button";
 import Vapi from "@vapi-ai/web";
 import { isPublicKeyMissingError } from "./utils";
 import PhoneCallUI from "./components/PhoneCallUI";
+import { InView } from "./motion-ui/in-view";
 
 export default function App() {
   const vapiRef = useRef(null);
@@ -101,41 +102,49 @@ export default function App() {
   };
 
   return (
-    <div>
-      {" "}
-      <Tilt
-        rotationFactor={4}
-        isRevese
-        style={{ transformOrigin: "center center" }}
-        springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-        className="group relative rounded-3xl"
-      >
-        <Spotlight
-          className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
-          size={248}
+    <InView
+      variants={{
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+      }}
+      viewOptions={{ margin: "0px 0px -200px 0px" }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+    >
+      <div>
+        <Tilt
+          rotationFactor={4}
+          isRevese
+          style={{ transformOrigin: "center center" }}
           springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-        />
-        <div className="w-[300px] min-h-[500px]  bg-gray-100 dark:bg-gray-800 p-4 shadow-xl">
-          <PhoneCallUI
-            onAnswer={handleAnswer}
-            onReject={handleReject}
-            isConnecting={connecting}
-            connected={connected}
-            assistantIsSpeaking={assistantIsSpeaking}
-            onEndCallClick={endCall}
+          className="group relative rounded-3xl"
+        >
+          <Spotlight
+            className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
+            size={248}
+            springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
           />
+          <div className="w-[300px] min-h-[500px]  bg-gray-100 dark:bg-gray-800 p-4 shadow-xl">
+            <PhoneCallUI
+              onAnswer={handleAnswer}
+              onReject={handleReject}
+              isConnecting={connecting}
+              connected={connected}
+              assistantIsSpeaking={assistantIsSpeaking}
+              onEndCallClick={endCall}
+            />
+          </div>
+        </Tilt>
+        <div
+          className={`mt-4 p-2 font-light w-[300px] ${
+            currentMessage ? "text-green-600 dark:text-green-400" : ""
+          }`}
+        >
+          <span className="font-bold"> Result: </span>{" "}
+          {currentMessage ||
+            "Nothing yet... tell the assistant about the property that you want to sell or buy."}
         </div>
-      </Tilt>
-      <div
-        className={`mt-4 p-2 font-light w-[300px] ${
-          currentMessage ? "text-green-600 dark:text-green-400" : ""
-        }`}
-      >
-        <span className="font-bold"> Result: </span>{" "}
-        {currentMessage ||
-          "Nothing yet... tell the assistant about the property that you want to sell or buy."}
       </div>
-    </div>
+    </InView>
   );
 }
 

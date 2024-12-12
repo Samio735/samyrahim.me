@@ -4,6 +4,7 @@ import { Tilt } from "./motion-ui/Tilt";
 import { Spotlight } from "./motion-ui/Spotlight";
 import { Cursor } from "./motion-ui/Cursor";
 import { MouseIcon } from "./MouseIcon";
+import { InView } from "./motion-ui/in-view";
 
 export default function WhatsAppContainer() {
   const [messages, setMessages] = useState([
@@ -85,120 +86,129 @@ export default function WhatsAppContainer() {
   };
 
   return (
-    <div>
-      <Tilt
-        rotationFactor={4}
-        isRevese
-        style={{ transformOrigin: "center center" }}
-        springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-        className="group relative rounded-[2rem] w-fit"
-      >
-        <Spotlight
-          className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
-          size={248}
+    <InView
+      variants={{
+        hidden: { opacity: 0, y: 100, filter: "blur(1px)" },
+        visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+      }}
+      viewOptions={{ margin: "0px 0px -200px 0px" }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+    >
+      <div>
+        <Tilt
+          rotationFactor={4}
+          isRevese
+          style={{ transformOrigin: "center center" }}
           springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-        />
-        {/* Phone frame styling */}
-        <div className="w-[380px] h-[580px] pb-6 relative  flex flex-col overflow-hidden bg-gray-100 dark:bg-gray-800  p-4 ">
-          <div className="w-full h-full relative rounded-[1rem] flex flex-col overflow-hidden">
-            {/* WhatsApp Header */}
-            <div className="flex items-center gap-3 px-4 py-3 bg-[#075E54]">
-              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-gray-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
-                </svg>
-              </div>
-              <div>
-                <span className="text-white font-medium">
-                  Alex - Property Sales Consultant
-                </span>
-                <div className="text-xs text-gray-300">online</div>
-              </div>
-            </div>
-
-            {/* Messages Container */}
-            <div className="flex-1 overflow-y-auto bg-[#E5DDD5] scrollbar-thin scrollbar-thumb-gray-300/60 scrollbar-track-transparent hover:scrollbar-thumb-gray-400/60">
-              <div className="flex flex-col-reverse gap-2 p-4">
-                {[...messages].reverse().map((msg, index) => (
-                  <WhatsAppBubble
-                    key={index}
-                    role={msg.role}
-                    content={msg.content}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* WhatsApp Input */}
-            <div className="relative p-2 bg-[#F0F0F0]">
-              <div className="relative text-slate-900  flex items-center shadow-md hover:scale-[1.02] transition-transform bg-white rounded-full">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" && sendMessage(inputValue)
-                  }
-                  className="w-full px-4 py-3 pr-12 bg-transparent focus:outline-none rounded-full transition-transform "
-                  placeholder="Type a message"
-                  disabled={isLoading}
-                />
-                <button
-                  onClick={() => sendMessage(inputValue)}
-                  disabled={isLoading}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-[#075E54] text-white cursor-none group"
-                >
-                  <Cursor
-                    attachToParent
-                    variants={{
-                      initial: { scale: 0.3, opacity: 0 },
-                      animate: { scale: 1, opacity: 1 },
-                      exit: { scale: 0.3, opacity: 0 },
-                    }}
-                    transition={{ duration: 0.1 }}
-                    className="absolute z-50"
-                  >
-                    <div className="flex items-center translatex-4">
-                      <MouseIcon className="h-6 w-6" color="#075E54" />
-                    </div>
-                  </Cursor>
+          className="group relative rounded-[2rem] w-fit"
+        >
+          <Spotlight
+            className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
+            size={248}
+            springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
+          />
+          {/* Phone frame styling */}
+          <div className="w-[380px] h-[580px] pb-6 relative  flex flex-col overflow-hidden bg-gray-100 dark:bg-gray-800  p-4 ">
+            <div className="w-full h-full relative rounded-[1rem] flex flex-col overflow-hidden">
+              {/* WhatsApp Header */}
+              <div className="flex items-center gap-3 px-4 py-3 bg-[#075E54]">
+                <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
                   <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                    className="w-6 h-6 text-gray-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
+                    <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
                   </svg>
-                </button>
+                </div>
+                <div>
+                  <span className="text-white font-medium">
+                    Alex - Property Sales Consultant
+                  </span>
+                  <div className="text-xs text-gray-300">online</div>
+                </div>
+              </div>
+
+              {/* Messages Container */}
+              <div className="flex-1 overflow-y-auto bg-[#E5DDD5] scrollbar-thin scrollbar-thumb-gray-300/60 scrollbar-track-transparent hover:scrollbar-thumb-gray-400/60">
+                <div className="flex flex-col-reverse gap-2 p-4">
+                  {[...messages].reverse().map((msg, index) => (
+                    <WhatsAppBubble
+                      key={index}
+                      role={msg.role}
+                      content={msg.content}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* WhatsApp Input */}
+              <div className="relative p-2 bg-[#F0F0F0]">
+                <div className="relative text-slate-900  flex items-center shadow-md hover:scale-[1.02] transition-transform bg-white rounded-full">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && sendMessage(inputValue)
+                    }
+                    className="w-full px-4 py-3 pr-12 bg-transparent focus:outline-none rounded-full transition-transform "
+                    placeholder="Type a message"
+                    disabled={isLoading}
+                  />
+                  <button
+                    onClick={() => sendMessage(inputValue)}
+                    disabled={isLoading}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-[#075E54] text-white cursor-none group"
+                  >
+                    <Cursor
+                      attachToParent
+                      variants={{
+                        initial: { scale: 0.3, opacity: 0 },
+                        animate: { scale: 1, opacity: 1 },
+                        exit: { scale: 0.3, opacity: 0 },
+                      }}
+                      transition={{ duration: 0.1 }}
+                      className="absolute z-50"
+                    >
+                      <div className="flex items-center translatex-4">
+                        <MouseIcon className="h-6 w-6" color="#075E54" />
+                      </div>
+                    </Cursor>
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Tilt>
+        </Tilt>
 
-      <div
-        className={`mt-4 p-2 font-light w-[300px] ${
-          lead ? "text-green-600 dark:text-green-400" : ""
-        }`}
-      >
-        <span className="font-semibold">Lead Information:</span>{" "}
-        {lead ? (
-          <span className="">{lead}</span>
-        ) : (
-          "No lead information collected yet... tell the assistant about the property that you want to sell or buy."
-        )}
+        <div
+          className={`mt-4 p-2 font-light w-[300px] ${
+            lead ? "text-green-600 dark:text-green-400" : ""
+          }`}
+        >
+          <span className="font-semibold">Lead Information:</span>{" "}
+          {lead ? (
+            <span className="">{lead}</span>
+          ) : (
+            "No lead information collected yet... tell the assistant about the property that you want to sell or buy."
+          )}
+        </div>
       </div>
-    </div>
+    </InView>
   );
 }
