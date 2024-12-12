@@ -32,14 +32,17 @@ export default function ChatContainer() {
         prompt: userMessage,
       });
 
-      const response = await fetch("http://localhost:8787/inbound", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: newMessages.slice(0, -1), // all messages except the last one
-          prompt: userMessage,
-        }),
-      });
+      const response = await fetch(
+        "https://flat-voice-77cf.samyrahim07.workers.dev/inbound",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: newMessages.slice(0, -1), // all messages except the last one
+            prompt: userMessage,
+          }),
+        }
+      );
 
       const data = await response.json();
       console.log("API response:", data);
