@@ -10,7 +10,7 @@ export default function WhatsAppContainer() {
     {
       role: "assistant",
       content:
-        "Hi! I'm Alex from Dubai Premium Properties. I noticed you're interested in Dubai real estate - whether you're looking to invest in a prime location or sell your property, I'd love to help you maximize your opportunity. Are you currently looking to buy or sell?",
+        "Hi! I'm Alex from Prem Properties. I noticed you're interested in Dubai real estate - whether you're looking to invest in a prime location or sell your property, I'd love to help you maximize your opportunity. Are you currently looking to buy or sell?",
     },
   ]);
   const [inputValue, setInputValue] = useState("");
