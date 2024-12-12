@@ -33,7 +33,7 @@ export default function WhatsAppContainer() {
         prompt: userMessage,
       });
 
-      const response = await fetch("http://localhost:8787/real-estate", {
+      const response = await fetch("http://localhost:8787/outbound", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -184,7 +184,11 @@ export default function WhatsAppContainer() {
         </div>
       </Tilt>
 
-      <div className="mt-2 p-2 font-light">
+      <div
+        className={`mt-4 p-2 font-light w-[300px] ${
+          lead ? "text-green-600 dark:text-green-400" : ""
+        }`}
+      >
         <span className="font-semibold">Lead Information:</span>{" "}
         {lead ? (
           <span className="">{lead}</span>

@@ -38,9 +38,17 @@ app.use(
 	})
 );
 
-const responseSchema = z.object({
+const responseSchemaOutbound = z.object({
 	message: z.string().describe('what the assistant says in response to the user'),
 	lead: z.union([z.string().describe('description of the property lead info'), z.null().describe('null if no lead information collected')]),
+});
+
+const responseSchemaInbound = z.object({
+	message: z.string().describe('what the assistant says in response to the user'),
+	appointment: z.union([
+		z.string().describe('description of the appointment info like time and description'),
+		z.null().describe('null if no appointment information collected'),
+	]),
 });
 
 const systemPrompt = `You are an AI assistant for Bright Smile Dental Clinic.
@@ -69,7 +77,7 @@ Example lead descriptions:
 
 Keep responses professional but friendly, showing expertise in Dubai's property market.`.trim();
 
-app.post('/', async (c) => {
+app.post('/inbound', async (c) => {
 	const body = await c.req.json<ChatRequest>();
 	console.log('Incoming request:', {
 		prompt: body.prompt,
@@ -85,7 +93,7 @@ app.post('/', async (c) => {
 			azureOpenAIApiVersion: c.env.AZURE_OPENAI_API_VERSION as string,
 		});
 
-		const chain = model.withStructuredOutput(responseSchema);
+		const chain = model.withStructuredOutput(responseSchemaInbound);
 		const response = await chain.invoke([
 			{
 				role: 'system',
@@ -115,7 +123,7 @@ app.post('/', async (c) => {
 	}
 });
 
-app.post('/real-estate', async (c) => {
+app.post('/outbound', async (c) => {
 	const body = await c.req.json<ChatRequest>();
 	console.log('Incoming real estate request:', {
 		prompt: body.prompt,
@@ -131,7 +139,7 @@ app.post('/real-estate', async (c) => {
 			azureOpenAIApiVersion: c.env.AZURE_OPENAI_API_VERSION as string,
 		});
 
-		const chain = model.withStructuredOutput(responseSchema);
+		const chain = model.withStructuredOutput(responseSchemaOutbound);
 		const response = await chain.invoke([
 			{
 				role: 'system',
