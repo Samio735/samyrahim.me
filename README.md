@@ -1,4 +1,4 @@
-# AI Landing Page
+# My personal Landing Page
 
 A modern landing page built with Astro showcasing AI automation services and solutions.
 
