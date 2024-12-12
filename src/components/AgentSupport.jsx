@@ -59,7 +59,7 @@ export default function AgentSupport() {
         if (message.type === "tool-calls") {
           const toolCall = message.toolCalls[0];
           if (toolCall.function.name === "bookSlot") {
-            const args = JSON.parse(toolCall.function.arguments);
+            const args = toolCall.function.arguments; // Remove JSON.parse
             const date = new Date(args.time).toLocaleString();
             setCurrentMessage(
               `You booked an appointment on ${date}. Details: ${args.description}`
@@ -129,7 +129,7 @@ export default function AgentSupport() {
         </div>
       </Tilt>
       <div
-        className={`mt-4 p-2 font-light ${
+        className={`mt-4 p-2 font-light w-[300px] ${
           currentMessage ? "text-green-600 dark:text-green-400" : ""
         }`}
       >
