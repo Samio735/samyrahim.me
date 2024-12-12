@@ -62,7 +62,7 @@ export default function AgentSupport() {
             const args = JSON.parse(toolCall.function.arguments);
             const date = new Date(args.time).toLocaleString();
             setCurrentMessage(
-              `Appointment booked for ${args.LeadName} on ${date}. Details: ${args.description}`
+              `You booked an appointment on ${date}. Details: ${args.description}`
             );
           }
         }
@@ -82,7 +82,7 @@ export default function AgentSupport() {
       setConnecting(true);
       await vapiRef.current?.start("3281a528-842a-40df-87d3-6895ed9c4e57");
     } catch (error) {
-      console.error('Failed to start call:', error);
+      console.error("Failed to start call:", error);
       setConnecting(false);
       setShowPublicKeyInvalidMessage(true);
     }
@@ -96,48 +96,49 @@ export default function AgentSupport() {
     try {
       vapiRef.current?.stop();
     } catch (error) {
-      console.error('Failed to end call:', error);
+      console.error("Failed to end call:", error);
     }
   };
 
   return (
     <div>
-    <Tilt 
-      rotationFactor={4}
-      isRevese
-      style={{ transformOrigin: 'center center' }}
-      springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-      className="group relative rounded-3xl"
-    >
-      <Spotlight 
-        className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
-        size={248}
+      <Tilt
+        rotationFactor={4}
+        isRevese
+        style={{ transformOrigin: "center center" }}
         springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-      />
-      <div className="w-[350px] min-h-[300px]  shadow-xl">
-        {!connected ? (
-          <CustomerSupportUI 
-            onStartChat={handleAnswer}
-            isConnecting={connecting}
-          />
-        ) : (
-          <>
+        className="group relative rounded-3xl"
+      >
+        <Spotlight
+          className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
+          size={248}
+          springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
+        />
+        <div className="w-[350px] min-h-[300px]  shadow-xl">
+          {!connected ? (
+            <CustomerSupportUI
+              onStartChat={handleAnswer}
+              isConnecting={connecting}
+            />
+          ) : (
             <CustomerActiveCallDetail
               assistantIsSpeaking={assistantIsSpeaking}
               onEndCallClick={endCall}
             />
-          
-          </>
-        )}
+          )}
+        </div>
+      </Tilt>
+      <div
+        className={`mt-4 p-2 font-light ${
+          currentMessage ? "text-green-600 dark:text-green-400" : ""
+        }`}
+      >
+        <span className="font-bold">Result: </span>
+        {currentMessage || "No appointment booked yet... "}
       </div>
-    </Tilt>
-      <div className={`mt-4 p-2 font-light ${currentMessage ? 'text-green-600 dark:text-green-400' : ''}`}>
-              <span className="font-bold">Result: </span> 
-              {currentMessage || "No appointment booked yet... "}
-            </div>
-            </div>
+    </div>
   );
-};
+}
 
 const usePublicKeyInvalid = () => {
   const [showPublicKeyInvalidMessage, setShowPublicKeyInvalidMessage] =
@@ -157,9 +158,3 @@ const usePublicKeyInvalid = () => {
     setShowPublicKeyInvalidMessage,
   };
 };
-
-
-
-
-
-

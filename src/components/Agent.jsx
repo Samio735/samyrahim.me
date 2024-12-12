@@ -56,18 +56,17 @@ export default function App() {
         }
       });
       // Various assistant messages can come back (like function calls, transcripts, etc)
-vapi.on("message", (message) => {
-  console.log(message);
-  if (message.type === "tool-calls") {
-    const toolCall = message.toolCalls[0];
-    if (toolCall.function.name === "storeLead") {
-      const args = toolCall.function.arguments;
-      const action = args.isBuyer ? "buy" : "sell";
-      setCurrentMessage(`You want to ${action} ${args.Property}`);
-    }
-  }
-});
-
+      vapi.on("message", (message) => {
+        console.log(message);
+        if (message.type === "tool-calls") {
+          const toolCall = message.toolCalls[0];
+          if (toolCall.function.name === "storeLead") {
+            const args = toolCall.function.arguments;
+            const action = args.isBuyer ? "buy" : "sell";
+            setCurrentMessage(`You want to ${action} ${args.Property}`);
+          }
+        }
+      });
     };
 
     setupVapiListeners();
@@ -83,7 +82,7 @@ vapi.on("message", (message) => {
       setConnecting(true);
       await vapiRef.current?.start("7d85d053-4f81-4195-b467-faf6fe32445e");
     } catch (error) {
-      console.error('Failed to start call:', error);
+      console.error("Failed to start call:", error);
       setConnecting(false);
       setShowPublicKeyInvalidMessage(true);
     }
@@ -97,44 +96,48 @@ vapi.on("message", (message) => {
     try {
       vapiRef.current?.stop();
     } catch (error) {
-      console.error('Failed to end call:', error);
+      console.error("Failed to end call:", error);
     }
   };
 
   return (
-    <div>    <Tilt 
-      rotationFactor={4}
-      isRevese
-      style={{ transformOrigin: 'center center' }}
-      springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-      className="group relative rounded-3xl"
-    >
-      <Spotlight 
-        className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
-        size={248}
+    <div>
+      {" "}
+      <Tilt
+        rotationFactor={4}
+        isRevese
+        style={{ transformOrigin: "center center" }}
         springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
-      />
-      <div className="w-[300px] min-h-[500px]  bg-gray-100 dark:bg-gray-800 p-4 shadow-xl">
-   
-        
-      
-        <PhoneCallUI 
-          onAnswer={handleAnswer}
-          onReject={handleReject}
-          isConnecting={connecting}
-          connected={connected}
-          assistantIsSpeaking={assistantIsSpeaking}
-          onEndCallClick={endCall}
+        className="group relative rounded-3xl"
+      >
+        <Spotlight
+          className="z-10 from-white/50 via-white/20 to-white/10 blur-2xl"
+          size={248}
+          springOptions={{ stiffness: 26.7, damping: 4.1, mass: 0.2 }}
         />
+        <div className="w-[300px] min-h-[500px]  bg-gray-100 dark:bg-gray-800 p-4 shadow-xl">
+          <PhoneCallUI
+            onAnswer={handleAnswer}
+            onReject={handleReject}
+            isConnecting={connecting}
+            connected={connected}
+            assistantIsSpeaking={assistantIsSpeaking}
+            onEndCallClick={endCall}
+          />
+        </div>
+      </Tilt>
+      <div
+        className={`mt-4 p-2 font-light w-[300px] ${
+          currentMessage ? "text-green-600 dark:text-green-400" : ""
+        }`}
+      >
+        <span className="font-bold"> Result: </span>{" "}
+        {currentMessage ||
+          "Nothing yet... tell the assistant about the property that you want to sell or buy."}
       </div>
-    </Tilt>
-      <div className={`mt-4 p-2 font-light w-[300px] ${currentMessage ? 'text-green-600 dark:text-green-400' : ''}`}>
-         <span className="font-bold">   Result: </span> {currentMessage||"Nothing yet... tell the assistant about the property that you want to sell or buy."}
-          </div>
     </div>
-
   );
-};
+}
 
 const usePublicKeyInvalid = () => {
   const [showPublicKeyInvalidMessage, setShowPublicKeyInvalidMessage] =
@@ -154,9 +157,3 @@ const usePublicKeyInvalid = () => {
     setShowPublicKeyInvalidMessage,
   };
 };
-
-
-
-
-
-
