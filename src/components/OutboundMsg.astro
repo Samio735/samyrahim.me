@@ -1,0 +1,24 @@
+---
+import WhatsAppContainer from "./WhatsAppContainer";
+import Container from "./Container.astro";
+---
+
+<section class="max-w-7xl mx-auto">
+    <Container>
+        <div class="flex flex-col lg:flex-row gap-8 items-center justify-center">   
+            <div class="lg:w-1/2 p-4 lg:p-[--card-padding] overflow-hidden flex rounded-[--card-border-radius] order-2 lg:order-1">
+                <div class="w-full m-auto space-y-8 lg:space-y-12">
+                    <WhatsAppContainer client:load/>
+                </div>
+            </div>
+            <div class="lg:w-1/2 order-1 lg:order-2">
+                <div class="mt-4 lg:mt-12 gap-4 flex flex-col p-4 lg:p-6 text-lg w-full">
+                    <div>
+                        <h2 class="text-gray-950 dark:text-white text-4xl font-semibold">Outbound Messaging</h2>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400">Reach your customers directly through WhatsApp and SMS campaigns. Perfect for marketing outreach, promotions, and automated follow-ups. <br/> Optimize your conversion rates with targeted messaging campaigns.</p>
+                </div>
+            </div>     
+        </div>
+    </Container>
+</section>

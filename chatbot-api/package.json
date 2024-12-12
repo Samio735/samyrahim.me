@@ -1,0 +1,27 @@
+{
+	"name": "chatbot-api",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"test": "vitest",
+		"cf-typegen": "wrangler types"
+	},
+	"dependencies": {
+		"@cloudflare/ai": "^1.0.0",
+		"@langchain/core": "^0.3.23",
+		"@langchain/openai": "^0.3.14",
+		"hono": "^3.0.0",
+		"langchain": "^0.3.7",
+		"zod": "^3.24.1"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.5.2",
+		"@cloudflare/workers-types": "^4.20241127.0",
+		"typescript": "^5.5.2",
+		"vitest": "2.0.5",
+		"wrangler": "^3.0.0"
+	}
+}
