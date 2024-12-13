@@ -29,7 +29,7 @@ const app = new Hono<{ Bindings: Bindings }>();
 app.use(
 	'/*',
 	cors({
-		origin: 'http://localhost:4321',
+		origin: ['https://samyrahim.me', 'http://localhost:4321'],
 		allowMethods: ['POST', 'GET', 'OPTIONS'],
 		allowHeaders: ['Content-Type'],
 		exposeHeaders: ['Content-Length'],
